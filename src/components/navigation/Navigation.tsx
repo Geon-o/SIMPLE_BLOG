@@ -7,7 +7,7 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import {SearchIcon} from "@chakra-ui/icons";
-import logoImg from "@/assets/logo/blog_logo.png";
+import BlogLogo from "@assets/logo/blog_logo.png";
 const Navigation = () => {
   return (
     <>
@@ -19,23 +19,27 @@ const Navigation = () => {
            display="flex"
            alignItems="center"
       >
-        <Container maxW="1500px">
-          <Stack direction="row" spacing={4}>
-            <img src='/blog_logo.png' alt="logo"/>
-
-            <Container maxW={'container.sm'} display={"flex"} alignItems={"center"} justifyContent={'center'}>
-              <InputGroup size="md" width="100%">
-                <Input type={"text"}/>
-                <InputRightElement>
-                  <IconButton aria-label='Search database'
-                              icon={<SearchIcon />}
-                              variant={'outline'}
-                              size={'sm'}
-                  />
-                </InputRightElement>
-              </InputGroup>
-            </Container>
-          </Stack>
+        <Container maxW="1500px" display={"flex"} alignItems={"center"} justifyContent={'center'}>
+          <Image boxSize='130px'
+                 src={BlogLogo}
+                 alt="logo"
+                 style={{cursor: "pointer", width: "180px"}}
+                 onClick={() => {
+                   window.location.href = "/";
+                 }}
+          />
+          <Box w={'100%'} display={"flex"} alignItems={"center"} justifyContent={'end'}>
+            <InputGroup size="md" width="300px">
+              <Input type={"text"}/>
+              <InputRightElement >
+                <IconButton aria-label='Search database'
+                            icon={<SearchIcon />}
+                            variant={'outline'}
+                            size={'sm'}
+                />
+              </InputRightElement>
+            </InputGroup>
+          </Box>
         </Container>
       </Box>
     </>
