@@ -1,19 +1,44 @@
-import {Card} from "@chakra-ui/react";
-
+import {
+  Box,
+  Container, IconButton, Image,
+  Input,
+  InputGroup,
+  InputRightElement,
+  Stack,
+} from "@chakra-ui/react";
+import {SearchIcon} from "@chakra-ui/icons";
+import logoImg from "@/assets/logo/blog_logo.png";
 const Navigation = () => {
   return (
-    <div>
-      <Card
-        display="flex"
-        height="50px"
-        width="100%"
-        background={"black"}
-        color={"white"}
-        justifyContent="center"
+    <>
+      <Box w="100%"
+           h="70px"
+           bg="white"
+           p="4"
+           style={{borderBottom: "1px solid #e2e8f0"}}
+           display="flex"
+           alignItems="center"
       >
-        테스트
-      </Card>
-    </div>
+        <Container maxW="1500px">
+          <Stack direction="row" spacing={4}>
+            <img src='/blog_logo.png' alt="logo"/>
+
+            <Container maxW={'container.sm'} display={"flex"} alignItems={"center"} justifyContent={'center'}>
+              <InputGroup size="md" width="100%">
+                <Input type={"text"}/>
+                <InputRightElement>
+                  <IconButton aria-label='Search database'
+                              icon={<SearchIcon />}
+                              variant={'outline'}
+                              size={'sm'}
+                  />
+                </InputRightElement>
+              </InputGroup>
+            </Container>
+          </Stack>
+        </Container>
+      </Box>
+    </>
   );
 };
 
