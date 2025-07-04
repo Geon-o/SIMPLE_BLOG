@@ -7,7 +7,9 @@ export const UseNotionData = () => {
 
     useEffect(() => {
         getNotionData()
-            .then(setData)
+            .then(data => {
+                setData(data);
+            })
             .catch(setError);
     }, []);
 

@@ -1,15 +1,25 @@
-import {Box, Card} from "@chakra-ui/react";
-import {UseNotionData} from "@hooks/useNotionData.tsx";
+import { Box, Card } from "@chakra-ui/react";
+import categories from "../../assets/categories.json";
 
-const SideBar = () => {
-    const {data, error} = UseNotionData();
+interface SideBarProps {
+    setSelectedCategory: (category: string | null) => void;
+}
+
+const SideBar = ({ setSelectedCategory }: SideBarProps) => {
 
     return (
         <>
             <Box w={'auto'}>
-                {data?.map((item: any, index: number) => (
-                    <Card key={index} p={2} borderBottom="1px solid #ddd" style={{boxShadow: "none"}}>
-                        {item?.properties?.categoryTitle?.title?.[0]?.plain_text || 'No Title'}
+                {categories.map((category, index) => (
+                    <Card
+                        key={index}
+                        p={2}
+                        borderBottom="1px solid #ddd"
+                        style={{ boxShadow: "none", cursor: "pointer" }}
+                        _hover={{ bg: "gray.100" }}
+                        onClick={() => setSelectedCategory(category)}
+                    >
+                        {category}
                     </Card>
                 ))}
             </Box>
