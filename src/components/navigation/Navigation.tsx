@@ -20,10 +20,10 @@ const Navigation = () => {
            alignItems="center"
       >
         <Container maxW="1500px" display={"flex"} alignItems={"center"} justifyContent={'center'}>
-          <Image boxSize='130px'
+          <Image h="70px"
                  src={BlogLogo}
                  alt="logo"
-                 style={{cursor: "pointer", width: "180px"}}
+                 style={{cursor: "pointer"}}
                  onClick={() => {
                    window.location.href = "/";
                  }}
