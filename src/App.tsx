@@ -1,9 +1,12 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Navigation from "@components/navigation/Navigation.tsx";
-import {Box, Container, Stack} from "@chakra-ui/react";
+import {Box, Container} from "@chakra-ui/react";
 import SideBar from "@pages/side_bar/SideBar.tsx";
+import { useState } from "react";
+import Content from "@pages/content/Content.tsx";
 
 function App() {
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
     const NAV_HEIGHT = 64; // Navigation 바 높이 (px)
     const SIDEBAR_WIDTH = 300; // SideBar 너비 (px)
@@ -24,37 +27,39 @@ function App() {
                 <Navigation />
             </Box>
 
-            {/* 고정된 왼쪽 SideBar */}
-            <Box
-                position="fixed"
-                top={`${NAV_HEIGHT}px`}
-                left={0}
-                height={`calc(100vh - ${NAV_HEIGHT}px)`}
-                width={`${SIDEBAR_WIDTH}px`}
-                overflowY="auto"
-                bg="gray.50"
-                borderRight="1px solid #e2e8f0"
-                p={4}
-            >
-                <SideBar />
-            </Box>
+            <Container maxW="1493px" display="flex" pt={`${NAV_HEIGHT}px`}>
+                {/* 고정된 왼쪽 SideBar */}
+                <Box
+                    as="aside"
+                    position="sticky"
+                    top={`${NAV_HEIGHT}px`}
+                    height={`calc(100vh - ${NAV_HEIGHT}px)`}
+                    width={`${SIDEBAR_WIDTH}px`}
+                    overflowY="auto"
+                    
+                    borderRight="1px solid #e2e8f0"
+                    p={4}
+                    flexShrink={0}
+                >
+                    <SideBar setSelectedCategory={setSelectedCategory} />
+                </Box>
 
-            {/* 실제 컨텐츠 영역 */}
-            <Box
-                ml={`${SIDEBAR_WIDTH}px`}
-                pt={`${NAV_HEIGHT}px`}
-                minH="100vh"
-                bg="white"
-            >
-                <Container maxW="1423px">
+                {/* 실제 컨텐츠 영역 */}
+                <Box
+                    as="main"
+                    flex="1"
+                    minH="100%"
+                    bg="white"
+                    p={4}
+                >
                     <Routes>
                         <Route
                             path="*"
-                            element={<Box><h1>contents area</h1></Box>}
+                            element={<Content selectedCategory={selectedCategory} />}
                         />
                     </Routes>
-                </Container>
-            </Box>
+                </Box>
+            </Container>
         </BrowserRouter>
     );
 }
