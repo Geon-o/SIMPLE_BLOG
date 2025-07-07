@@ -36,10 +36,10 @@ function App() {
                     height={`calc(100vh - ${NAV_HEIGHT}px)`}
                     width={`${SIDEBAR_WIDTH}px`}
                     overflowY="auto"
-                    
                     borderRight="1px solid #e2e8f0"
                     p={4}
                     flexShrink={0}
+                    display={{ base: "none", md: "block" }}
                 >
                     <SideBar setSelectedCategory={setSelectedCategory} />
                 </Box>
@@ -51,11 +51,12 @@ function App() {
                     minH="100%"
                     bg="white"
                     p={4}
+                    borderRight={{ base: "none", md: "1px solid #ddd" }}
                 >
                     <Routes>
                         <Route
                             path="*"
-                            element={<Content selectedCategory={selectedCategory} />}
+                            element={<Content />}
                         />
                     </Routes>
                 </Box>
