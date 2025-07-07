@@ -1,14 +1,11 @@
 import { Box } from "@chakra-ui/react";
+import ContentCard from "@components/ContentCard.tsx";
 
-interface ContentProps {
-    selectedCategory: string | null;
-}
+const Content = () => {
 
-const Content = ({ selectedCategory }: ContentProps) => {
     return (
-        <Box borderRight="1px solid #ddd" p={4} minH="100vh" overflowY="auto">
-            <h1>contents area</h1>
-            {selectedCategory && <p>Selected Category: {selectedCategory}</p>}
+        <Box p={3} pt={20} minH="100vh" overflowY="auto" maxW={"880px"} mx="auto">
+            <ContentCard/>
         </Box>
     );
 };
