@@ -6,6 +6,7 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
+  Flex,
   IconButton,
   Image,
   Input,
@@ -14,7 +15,7 @@ import {
   useBreakpointValue,
   VStack,
 } from "@chakra-ui/react";
-import { HamburgerIcon, SearchIcon } from "@chakra-ui/icons";
+import { CloseIcon, HamburgerIcon, SearchIcon } from "@chakra-ui/icons";
 import BlogLogo from "@assets/logo/blog_logo.png";
 import { useState } from "react";
 import categories from "@assets/categories.json";
@@ -46,7 +47,7 @@ const Navigation = () => {
         >
           {isMobile ? (
             <>
-              <Box /> 
+              <Box />
               <Image
                 h="60px"
                 src={BlogLogo}
@@ -89,7 +90,17 @@ const Navigation = () => {
       <Drawer isOpen={isDrawerOpen} placement="right" onClose={handleDrawerClose}>
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerHeader borderBottomWidth="1px">메뉴</DrawerHeader>
+          <DrawerHeader borderBottomWidth="1px">
+            <Flex justifyContent="space-between" alignItems="center">
+              메뉴
+              <IconButton
+                aria-label="Close menu"
+                icon={<CloseIcon />}
+                onClick={handleDrawerClose}
+                variant="ghost"
+              />
+            </Flex>
+          </DrawerHeader>
           <DrawerBody>
             <VStack spacing={4}>
               <InputGroup>
