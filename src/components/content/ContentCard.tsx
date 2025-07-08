@@ -6,7 +6,6 @@ import {
     Text,
     VStack
 } from "@chakra-ui/react";
-import {useNotionData} from "@hooks/useNotionData.tsx";
 
 const formatDate = (dateString: string) => {
     if (!dateString) return '';

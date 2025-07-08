@@ -1,14 +1,14 @@
 import {Box, HStack, Text, VStack} from "@chakra-ui/react";
 import ContentCard from "@components/content/ContentCard.tsx";
-import {useNotionData} from "@hooks/useNotionData.tsx";
+import useNotionData from "@hooks/useNotionData.tsx";
 import type {CategoryPropsStatus} from "@types/CategoryPropsStatus.tsx";
 
 const ContentPage = (categoryProps: CategoryPropsStatus) => {
-    const {data} = useNotionData();
+    const {getContent} = useNotionData();
     const dataList = [];
 
     for (let i = 0; i < 8; i++) {
-        dataList.push(data[i]);
+        dataList.push(getContent().data[i]);
     }
 
     return (
