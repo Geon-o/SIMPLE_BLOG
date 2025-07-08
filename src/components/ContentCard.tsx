@@ -19,7 +19,6 @@ const formatDate = (dateString: string) => {
 
 const ContentCard = () => {
     const {data} = useNotionData();
-    console.log(data);
 
     return (
         <VStack spacing={8}>
