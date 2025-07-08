@@ -1,5 +1,6 @@
 import {
   Box,
+  Collapse,
   Container,
   Drawer,
   DrawerBody,
@@ -22,10 +23,19 @@ import categories from "@assets/categories.json";
 
 const Navigation = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [openCategory, setOpenCategory] = useState<string | null>(null);
   const isMobile = useBreakpointValue({ base: true, md: false });
 
   const handleDrawerOpen = () => setIsDrawerOpen(true);
   const handleDrawerClose = () => setIsDrawerOpen(false);
+
+  const handleCategoryClick = (categoryName: string) => {
+    if (openCategory === categoryName) {
+      setOpenCategory(null);
+    } else {
+      setOpenCategory(categoryName);
+    }
+  };
 
   return (
     <>
@@ -115,14 +125,31 @@ const Navigation = () => {
               </InputGroup>
               <VStack align="start" w="100%">
                 {categories.map((category, index) => (
-                  <Box
-                    key={index}
-                    p={2}
-                    w="100%"
-                    _hover={{ bg: "gray.100" }}
-                    cursor="pointer"
-                  >
-                    {category}
+                  <Box key={index} w="100%">
+                    <Box
+                      p={2}
+                      w="100%"
+                      _hover={{ bg: "gray.100" }}
+                      cursor="pointer"
+                      onClick={() => handleCategoryClick(category.name)}
+                    >
+                      {category.name}
+                    </Box>
+                    <Collapse in={openCategory === category.name} animateOpacity>
+                      <VStack align="start" w="100%" pl={4} mt={2}>
+                        {category.subCategories.map((subCategory, subIndex) => (
+                          <Box
+                            key={subIndex}
+                            p={2}
+                            w="100%"
+                            _hover={{ bg: "gray.100" }}
+                            cursor="pointer"
+                          >
+                            {subCategory}
+                          </Box>
+                        ))}
+                      </VStack>
+                    </Collapse>
                   </Box>
                 ))}
               </VStack>
