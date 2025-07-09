@@ -7,7 +7,7 @@ import ContentPage from "@pages/content/ContentPage.tsx";
 import type {CategoryPropsStatus} from "@/types/CategoryPropsStatus.tsx";
 
 function App() {
-    const [selectedCategoryProps, setSelectedCategoryProps] = useState<CategoryPropsStatus>(null);
+    const [selectedCategoryProps, setSelectedCategoryProps] = useState<CategoryPropsStatus>({ category: "최근게시물", subCategory: "" });
 
     const NAV_HEIGHT = 64; // Navigation 바 높이 (px)
     const SIDEBAR_WIDTH = 300; // SideBar 너비 (px)

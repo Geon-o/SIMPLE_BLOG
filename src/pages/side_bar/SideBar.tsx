@@ -1,9 +1,10 @@
 import {Box, Card, Collapse, VStack} from "@chakra-ui/react";
 import categories from "../../assets/categories.json";
 import {useEffect, useState} from "react";
+import type {CategoryHandlerProps} from "@/types/CategoryHandlerProps.tsx";
 import type {CategoryPropsStatus} from "@/types/CategoryPropsStatus.tsx";
 
-const SideBar = ({setSelectedCategoryProps}: CategoryPropsStatus) => {
+const SideBar = ({setSelectedCategoryProps}: CategoryHandlerProps) => {
     const [openCategory, setOpenCategory] = useState<string | null>(null);
     const [selectedCategory, setSelectedCategory] = useState<CategoryPropsStatus>({
         category: "최근게시물",

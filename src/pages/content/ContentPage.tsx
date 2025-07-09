@@ -3,7 +3,7 @@ import ContentCard from "@components/content/ContentCard.tsx";
 import useNotionData from "@hooks/useNotionData.tsx";
 import type {CategoryPropsStatus} from "@/types/CategoryPropsStatus.tsx";
 
-const ContentPage = (categoryProps: CategoryPropsStatus) => {
+const ContentPage = ({ category }: { category: CategoryPropsStatus }) => {
     const {getContent} = useNotionData();
     const dataList = [];
 
@@ -14,12 +14,12 @@ const ContentPage = (categoryProps: CategoryPropsStatus) => {
     return (
         <>
             <HStack>
-                <Text style={{fontSize: categoryProps.category?.subCategory ? "20px" : "25px", fontWeight: "bold", textAlign: "left"}}>
-                    {categoryProps.category?.category}
+                <Text style={{fontSize: category.subCategory ? "20px" : "25px", fontWeight: "bold", textAlign: "left"}}>
+                    {category.category}
                 </Text>
-                {categoryProps.category?.subCategory && (
-                    <Text style={{fontSize: categoryProps.category?.subCategory ? "25px" : "20px", fontWeight: "bold", textAlign: "left"}}>
-                        {` > ${categoryProps.category?.subCategory}`}
+                {category.subCategory && (
+                    <Text style={{fontSize: category.subCategory ? "25px" : "20px", fontWeight: "bold", textAlign: "left"}}>
+                        {` > ${category.subCategory}`}
                     </Text>
                 )}
             </HStack>

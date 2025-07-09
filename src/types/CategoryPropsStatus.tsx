@@ -1,4 +1,4 @@
 export interface CategoryPropsStatus {
-    category: string;
-    subCategory: string;
+    category: string | null;
+    subCategory: string | null;
 }
