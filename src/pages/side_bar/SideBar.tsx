@@ -34,7 +34,19 @@ const SideBar = ({setSelectedCategoryProps}: CategoryPropsStatus) => {
     };
 
     useEffect(() => {
+        for (let i = 0; i < categories.length; i++) {
+            if (categories[i].name === selectedCategory.category) {
+                if (categories[i].subCategories.indexOf(selectedCategory.subCategory) === -1) {
+                    setSelectedCategory({
+                        category: selectedCategory.category,
+                        subCategory: ""
+                    })
+                }
+                break;
+            }
+        }
         setSelectedCategoryProps(selectedCategory);
+
     }, [selectedCategory.category, selectedCategory.subCategory]);
 
     return (
