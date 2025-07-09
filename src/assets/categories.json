@@ -1,6 +1,22 @@
 [
-  "React",
-  "JavaScript",
-  "TypeScript",
-  "일상"
+  {
+    "name": "최근게시물",
+    "subCategories": []
+  },
+  {
+    "name": "React",
+    "subCategories": ["useState", "useEffect", "useContext"]
+  },
+  {
+    "name": "JavaScript",
+    "subCategories": ["ES6", "DOM", "Event"]
+  },
+  {
+    "name": "TypeScript",
+    "subCategories": ["Interface", "Generic", "Utility Types"]
+  },
+  {
+    "name": "일상",
+    "subCategories": []
+  }
 ]

@@ -3,10 +3,11 @@ import Navigation from "@components/navigation/Navigation.tsx";
 import {Box, Container} from "@chakra-ui/react";
 import SideBar from "@pages/side_bar/SideBar.tsx";
 import { useState } from "react";
-import Content from "@pages/content/Content.tsx";
+import ContentPage from "@pages/content/ContentPage.tsx";
+import type {CategoryPropsStatus} from "@types/CategoryPropsStatus.tsx";
 
 function App() {
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    const [selectedCategoryProps, setSelectedCategoryProps] = useState<CategoryPropsStatus>(null);
 
     const NAV_HEIGHT = 64; // Navigation 바 높이 (px)
     const SIDEBAR_WIDTH = 300; // SideBar 너비 (px)
@@ -24,7 +25,7 @@ function App() {
                 bg="white"
                 boxShadow="sm"
             >
-                <Navigation />
+                <Navigation setSelectedCategoryProps={setSelectedCategoryProps}/>
             </Box>
 
             <Container maxW="1493px" display="flex" pt={`${NAV_HEIGHT}px`}>
@@ -41,7 +42,7 @@ function App() {
                     flexShrink={0}
                     display={{ base: "none", md: "block" }}
                 >
-                    <SideBar setSelectedCategory={setSelectedCategory} />
+                    <SideBar setSelectedCategoryProps={setSelectedCategoryProps} />
                 </Box>
 
                 {/* 실제 컨텐츠 영역 */}
@@ -55,8 +56,8 @@ function App() {
                 >
                     <Routes>
                         <Route
-                            path="*"
-                            element={<Content />}
+                            path="/SIMPLE_BLOG/"
+                            element={<ContentPage category={selectedCategoryProps}/>}
                         />
                     </Routes>
                 </Box>

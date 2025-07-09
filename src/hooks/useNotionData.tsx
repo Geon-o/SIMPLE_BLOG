@@ -1,16 +1,23 @@
 import {useEffect, useState} from "react";
-import {getNotionData} from "@/api/NotionApi.tsx";
+import NotionApi from "@/api/NotionApi.tsx";
 
-export const useNotionData = () => {
+export default function useNotionData() {
     const [data, setData] = useState([]);
     const [error, setError] = useState<Error | null>(null);
+    const {contentApi} = NotionApi();
 
-    useEffect(() => {
-        getNotionData()
-            .then(setData)
-            .catch(setError);
-    }, []);
+    const getContent = () => {
+        useEffect(() => {
+            contentApi()
+                .then(setData)
+                .catch(setError);
+        }, []);
 
-    return {data, error}
+        return {data, error}
+    };
+
+    return {
+        getContent
+    };
 };
 
