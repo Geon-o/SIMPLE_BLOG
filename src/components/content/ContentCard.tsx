@@ -21,7 +21,7 @@ const ContentCard = ({data, loading}: { data: any[], loading: boolean }) => {
     if (loading) {
         return (
             <VStack spacing={8}>
-                {[...Array(8)].map((_, index) => (
+                {[...Array(10)].map((_, index) => (
                     <SkeletonCard key={index}/>
                 ))}
             </VStack>

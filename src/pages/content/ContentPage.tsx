@@ -10,8 +10,6 @@ const ContentPage = ({ category }: { category: CategoryPropsStatus }) => {
         return <Text>Error loading content.</Text>;
     }
 
-    const dataList = data.slice(0, 8);
-
     return (
         <>
             <HStack>
@@ -26,7 +24,7 @@ const ContentPage = ({ category }: { category: CategoryPropsStatus }) => {
             </HStack>
 
             <Box p={3} pt={10} minH="100vh" overflowY="auto" maxW={"880px"} mx="auto">
-                <ContentCard data={dataList} loading={loading}/>
+                <ContentCard data={data} loading={loading}/>
             </Box>
         </>
     );
