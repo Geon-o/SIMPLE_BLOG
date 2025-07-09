@@ -4,12 +4,13 @@ import useNotionData from "@hooks/useNotionData.tsx";
 import type {CategoryPropsStatus} from "@/types/CategoryPropsStatus.tsx";
 
 const ContentPage = ({ category }: { category: CategoryPropsStatus }) => {
-    const {getContent} = useNotionData();
-    const dataList = [];
+    const {data, loading, error} = useNotionData();
 
-    for (let i = 0; i < 8; i++) {
-        dataList.push(getContent().data[i]);
+    if (error) {
+        return <Text>Error loading content.</Text>;
     }
+
+    const dataList = data.slice(0, 8);
 
     return (
         <>
@@ -25,7 +26,7 @@ const ContentPage = ({ category }: { category: CategoryPropsStatus }) => {
             </HStack>
 
             <Box p={3} pt={10} minH="100vh" overflowY="auto" maxW={"880px"} mx="auto">
-                <ContentCard data={dataList}/>
+                <ContentCard data={dataList} loading={loading}/>
             </Box>
         </>
     );
