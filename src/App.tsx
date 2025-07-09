@@ -3,7 +3,7 @@ import Navigation from "@components/navigation/Navigation.tsx";
 import {Box, Container} from "@chakra-ui/react";
 import SideBar from "@pages/side_bar/SideBar.tsx";
 import { useState } from "react";
-import ContentPage from "@pages/content/ContentPage.tsx";
+import RecentPostsPage from "@pages/content/RecentPostsPage.tsx";
 import type {CategoryPropsStatus} from "@/types/CategoryPropsStatus.tsx";
 
 function App() {
@@ -57,7 +57,7 @@ function App() {
                     <Routes>
                         <Route
                             path="/SIMPLE_BLOG/"
-                            element={<ContentPage category={selectedCategoryProps}/>}
+                            element={<RecentPostsPage category={selectedCategoryProps}/>}
                         />
                     </Routes>
                 </Box>

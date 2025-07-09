@@ -3,7 +3,7 @@ import ContentCard from "@components/content/ContentCard.tsx";
 import useNotionData from "@hooks/useNotionData.tsx";
 import type {CategoryPropsStatus} from "@/types/CategoryPropsStatus.tsx";
 
-const ContentPage = ({ category }: { category: CategoryPropsStatus }) => {
+const RecentPostsPage = ({ category }: { category: CategoryPropsStatus }) => {
     const {data, loading, error} = useNotionData();
 
     if (error) {
@@ -30,4 +30,4 @@ const ContentPage = ({ category }: { category: CategoryPropsStatus }) => {
     );
 };
 
-export default ContentPage;
+export default RecentPostsPage;
