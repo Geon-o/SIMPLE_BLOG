@@ -20,9 +20,10 @@ import {CloseIcon, HamburgerIcon, SearchIcon} from "@chakra-ui/icons";
 import BlogLogo from "@assets/logo/blog_logo.png";
 import {useEffect, useState} from "react";
 import categories from "@assets/categories.json";
+import type {CategoryHandlerProps} from "@/types/CategoryHandlerProps.tsx";
 import type {CategoryPropsStatus} from "@/types/CategoryPropsStatus.tsx";
 
-const Navigation = ({setSelectedCategoryProps}: CategoryPropsStatus) => {
+const Navigation = ({setSelectedCategoryProps}: CategoryHandlerProps) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [openCategory, setOpenCategory] = useState<string | null>(null);
     const isMobile = useBreakpointValue({base: true, md: false});
