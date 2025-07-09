@@ -20,7 +20,7 @@ import {CloseIcon, HamburgerIcon, SearchIcon} from "@chakra-ui/icons";
 import BlogLogo from "@assets/logo/blog_logo.png";
 import {useEffect, useState} from "react";
 import categories from "@assets/categories.json";
-import type {CategoryPropsStatus} from "@types/CategoryPropsStatus.tsx";
+import type {CategoryPropsStatus} from "@/types/CategoryPropsStatus.tsx";
 
 const Navigation = ({setSelectedCategoryProps}: CategoryPropsStatus) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
