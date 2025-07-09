@@ -4,7 +4,7 @@ import {Box, Container} from "@chakra-ui/react";
 import SideBar from "@pages/side_bar/SideBar.tsx";
 import { useState } from "react";
 import ContentPage from "@pages/content/ContentPage.tsx";
-import type {CategoryPropsStatus} from "@types/CategoryPropsStatus.tsx";
+import type {CategoryPropsStatus} from "@/types/CategoryPropsStatus.tsx";
 
 function App() {
     const [selectedCategoryProps, setSelectedCategoryProps] = useState<CategoryPropsStatus>(null);
