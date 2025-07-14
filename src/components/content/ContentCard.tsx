@@ -6,6 +6,7 @@ import {
     Text,
     VStack
 } from "@chakra-ui/react";
+import SkeletonCard from "@components/content/SkeletonCard.tsx";
 
 const formatDate = (dateString: string) => {
     if (!dateString) return '';
@@ -16,11 +17,21 @@ const formatDate = (dateString: string) => {
     return `${year}-${month}-${day}`;
 };
 
-const ContentCard = (data: any) => {
+const ContentCard = ({data, loading}: { data: any[], loading: boolean }) => {
+    if (loading) {
+        return (
+            <VStack spacing={8}>
+                {[...Array(10)].map((_, index) => (
+                    <SkeletonCard key={index}/>
+                ))}
+            </VStack>
+        );
+    }
+
     return (
         <>
             <VStack spacing={8}>
-                {data?.data?.map((item: any) => {
+                {data?.map((item: any) => {
                     const createdDate = formatDate(item?.created_time);
                     const lastEditedDate = formatDate(item?.last_edited_time);
                     const displayDate = createdDate === lastEditedDate ? `${createdDate}` : `${lastEditedDate}`;
@@ -28,7 +39,7 @@ const ContentCard = (data: any) => {
                     return (
                         <Card
                             key={item?.properties?.ID.unique_id.number}
-                            direction={{ base: 'column', sm: 'row' }}
+                            direction={{base: 'column', sm: 'row'}}
                             overflow='hidden'
                             variant='outline'
                             borderRadius="lg"
@@ -42,7 +53,7 @@ const ContentCard = (data: any) => {
                         >
                             <Image
                                 objectFit='cover'
-                                maxW={{ base: '100%', sm: '200px' }}
+                                maxW={{base: '100%', sm: '200px'}}
                                 src={item?.properties.imageUrl.rich_text[0].plain_text}
                                 alt={item?.properties.content.title[0].plain_text}
                             />
@@ -61,7 +72,7 @@ const ContentCard = (data: any) => {
                                     </Text>
 
                                     <HStack spacing={2} mt={2}>
-                                        {item?.properties.tag.multi_select.map((tag) => (
+                                        {item?.properties.tag.multi_select.map((tag: any) => (
                                             <Tag key={tag.id} size="sm" variant="solid" colorScheme={'blackAlpha'}>
                                                 {tag.name}
                                             </Tag>

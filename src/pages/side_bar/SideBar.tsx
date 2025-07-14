@@ -3,6 +3,7 @@ import categories from "../../assets/categories.json";
 import {useEffect, useState} from "react";
 import type {CategoryHandlerProps} from "@/types/CategoryHandlerProps.tsx";
 import type {CategoryPropsStatus} from "@/types/CategoryPropsStatus.tsx";
+import {useNavigate} from "react-router-dom";
 
 const SideBar = ({setSelectedCategoryProps}: CategoryHandlerProps) => {
     const [openCategory, setOpenCategory] = useState<string | null>(null);
@@ -10,74 +11,67 @@ const SideBar = ({setSelectedCategoryProps}: CategoryHandlerProps) => {
         category: "최근게시물",
         subCategory: "",
     });
+    const navigate = useNavigate();
 
-    const handleCategoryClick = (categoryName: string) => {
-        if (openCategory === categoryName) {
+    const handleCategoryClick = (category: any) => {
+        if (openCategory === category.name) {
             setOpenCategory(null);
-            setSelectedCategory({
-                category: categoryName,
-                subCategory: null,
-            });
         } else {
-            setOpenCategory(categoryName);
-            setSelectedCategory({
-                category: categoryName,
-                subCategory: selectedCategory.subCategory,
-            });
+            setOpenCategory(category.name);
         }
+        setSelectedCategory({
+            category: category.name,
+            subCategory: null,
+        });
+        navigate(category.url);
     };
 
-    const handleSubCategoryClick = (subCategoryName: string) => {
-        setSelectedCategory({
-            category: selectedCategory.category,
-            subCategory:subCategoryName
-        });
+    const handleSubCategoryClick = (subCategory: any) => {
+        setSelectedCategory(prev => ({
+            ...prev,
+            subCategory: subCategory.name
+        }));
+        navigate(subCategory.url);
     };
 
     useEffect(() => {
-        for (let i = 0; i < categories.length; i++) {
-            if (categories[i].name === selectedCategory.category) {
-                if (categories[i].subCategories.indexOf(selectedCategory.subCategory) === -1) {
-                    setSelectedCategory({
-                        category: selectedCategory.category,
-                        subCategory: ""
-                    })
-                }
-                break;
+        const currentCategory = categories.find(c => c.name === selectedCategory.category);
+        if (currentCategory && selectedCategory.subCategory) {
+            if (!currentCategory.subCategories.some(sc => sc.name === selectedCategory.subCategory)) {
+                setSelectedCategory(prev => ({ ...prev, subCategory: "" }));
             }
         }
         setSelectedCategoryProps(selectedCategory);
-
-    }, [selectedCategory.category, selectedCategory.subCategory]);
+    }, [selectedCategory, setSelectedCategoryProps]);
 
     return (
         <>
             <Box w={"auto"}>
-                {categories.map((category, index) => (
-                    <Box key={index} w="100%">
+                {categories.map((category) => (
+                    <Box key={category.name} w="100%">
                         <Card
                             p={2}
                             borderBottom="1px solid #ddd"
                             style={{boxShadow: "none", cursor: "pointer"}}
-                            bg={selectedCategory.category === category.name ? "gray.100" : "transparent"}
+                            bg={selectedCategory.category === category.name && !selectedCategory.subCategory ? "gray.100" : "transparent"}
                             _hover={{bg: "gray.100"}}
-                            onClick={() => handleCategoryClick(category.name)}
+                            onClick={() => handleCategoryClick(category)}
                         >
                             {category.name}
                         </Card>
                         <Collapse in={openCategory === category.name} animateOpacity>
                             <VStack align="start" w="100%" pl={4} mt={2}>
-                                {category.subCategories.map((subCategory, subIndex) => (
+                                {category.subCategories.map((subCategory) => (
                                     <Box
-                                        key={subIndex}
+                                        key={subCategory.name}
                                         p={2}
                                         w="100%"
-                                        bg={selectedCategory.subCategory === subCategory ? "gray.100" : "transparent"}
+                                        bg={selectedCategory.subCategory === subCategory.name ? "gray.100" : "transparent"}
                                         _hover={{bg: "gray.100"}}
                                         cursor="pointer"
                                         onClick={() => handleSubCategoryClick(subCategory)}
                                     >
-                                        {subCategory}
+                                        {subCategory.name}
                                     </Box>
                                 ))}
                             </VStack>
