@@ -8,19 +8,13 @@ export default function useNotionData() {
     const {contentApi} = NotionApi();
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await contentApi();
-                setData(response);
-            } catch (error) {
-                setError(error as Error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, [contentApi]);
+        contentApi()
+          .then(setData)
+          .catch(setError)
+          .finally(() => {
+              setLoading(false);
+          });
+    }, []);
 
     return {data, loading, error};
 };
