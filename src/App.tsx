@@ -5,6 +5,7 @@ import SideBar from "@pages/side_bar/SideBar.tsx";
 import { useState } from "react";
 import RecentPostsPage from "@pages/content/RecentPostsPage.tsx";
 import type {CategoryPropsStatus} from "@/types/CategoryPropsStatus.tsx";
+import NotionPageView from "@/test/NotionPageView.tsx";
 
 function App() {
     const [selectedCategoryProps, setSelectedCategoryProps] = useState<CategoryPropsStatus>({ category: "최근게시물", subCategory: "" });
@@ -58,6 +59,10 @@ function App() {
                         <Route
                             path="/SIMPLE_BLOG/"
                             element={<RecentPostsPage category={selectedCategoryProps}/>}
+                        />
+                        <Route
+                            path="/SIMPLE_BLOG/react"
+                            element={<NotionPageView pageId={'페이지 아이디 작성'}/>}
                         />
                     </Routes>
                 </Box>
