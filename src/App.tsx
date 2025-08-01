@@ -61,8 +61,8 @@ function App() {
                             element={<RecentPostsPage category={selectedCategoryProps}/>}
                         />
                         <Route
-                            path="/SIMPLE_BLOG/react"
-                            element={<NotionPageView pageId={'페이지 아이디 작성'}/>}
+                            path="/post"
+                            element={<NotionPageView />}
                         />
                     </Routes>
                 </Box>

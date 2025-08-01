@@ -7,6 +7,7 @@ import {
     VStack
 } from "@chakra-ui/react";
 import SkeletonCard from "@components/content/SkeletonCard.tsx";
+import {useNavigate} from "react-router-dom";
 
 const formatDate = (dateString: string) => {
     if (!dateString) return '';
@@ -18,6 +19,7 @@ const formatDate = (dateString: string) => {
 };
 
 const ContentCard = ({data, loading}: { data: any[], loading: boolean }) => {
+    const navigate = useNavigate();
     if (loading) {
         return (
             <VStack spacing={8}>
@@ -50,6 +52,7 @@ const ContentCard = ({data, loading}: { data: any[], loading: boolean }) => {
                                 boxShadow: 'xl',
                             }}
                             w="100%"
+                            onClick={() => navigate('/post', { state: { pageId: item.id } })}
                         >
                             <Image
                                 objectFit='cover'
