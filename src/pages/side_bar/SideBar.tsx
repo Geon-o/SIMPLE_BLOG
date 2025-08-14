@@ -23,7 +23,7 @@ const SideBar = ({setSelectedCategoryProps}: CategoryHandlerProps) => {
             category: category.name,
             subCategory: null,
         });
-        navigate(category.url);
+        navigate(`/category${category.id}`);
     };
 
     const handleSubCategoryClick = (subCategory: any) => {
@@ -31,7 +31,7 @@ const SideBar = ({setSelectedCategoryProps}: CategoryHandlerProps) => {
             ...prev,
             subCategory: subCategory.name
         }));
-        navigate(subCategory.url);
+        navigate(`/category${subCategory.id}`);
     };
 
     useEffect(() => {
@@ -69,7 +69,7 @@ const SideBar = ({setSelectedCategoryProps}: CategoryHandlerProps) => {
                                         bg={selectedCategory.subCategory === subCategory.name ? "gray.100" : "transparent"}
                                         _hover={{bg: "gray.100"}}
                                         cursor="pointer"
-                                        onClick={() => handleSubCategoryClick(subCategory)}
+                                        onClick={() => handleSubCategoryClick(subCategory, category)}
                                     >
                                         {subCategory.name}
                                     </Box>

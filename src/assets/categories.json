@@ -2,38 +2,38 @@
   {
     "name": "최근게시물",
     "subCategories": [],
-    "url": "/SIMPLE_BLOG/"
+    "id": "/recent"
   },
   {
     "name": "React",
     "subCategories": [
-      {"name": "useState", "url":  "/SIMPLE_BLOG/react/useState"},
-      {"name": "useEffect", "url":  "/SIMPLE_BLOG/react/useEffect"},
-      {"name": "useContext", "url":  "/SIMPLE_BLOG/react/useContext"}
+      {"name": "useState", "id":  "/react/useState"},
+      {"name": "useEffect", "id":  "/react/useEffect"},
+      {"name": "useContext", "id":  "/react/useContext"}
     ],
-    "url": "/SIMPLE_BLOG/react"
+    "id": "/react"
   },
   {
     "name": "JavaScript",
     "subCategories": [
-      {"name": "ES6", "url": "/SIMPLE_BLOG/javaScript/es6"},
-      {"name": "DOM", "url": "/SIMPLE_BLOG/javaScript/dom"},
-      {"name": "Event", "url": "/SIMPLE_BLOG/javaScript/event"}
+      {"name": "ES6", "id": "/javaScript/es6"},
+      {"name": "DOM", "id": "/javaScript/dom"},
+      {"name": "Event", "id": "/javaScript/event"}
     ],
-    "url": "/SIMPLE_BLOG/javaScript"
+    "id": "/javaScript"
   },
   {
     "name": "TypeScript",
     "subCategories": [
-      { "name": "Interface", "url": "/SIMPLE_BLOG/typeScript/interface" },
-      { "name": "Generic", "url": "/SIMPLE_BLOG/typeScript/generic" },
-      { "name": "Utility Types", "url": "/SIMPLE_BLOG/typeScript/utility-types" }
+      { "name": "Interface", "id": "/typeScript/interface" },
+      { "name": "Generic", "id": "/typeScript/generic" },
+      { "name": "Utility Types", "id": "/typeScript/utility-types" }
     ],
-    "url": "/SIMPLE_BLOG/typeScript"
+    "id": "/typeScript"
   },
   {
     "name": "일상",
     "subCategories": [],
-    "url": "/SIMPLE_BLOG/daily"
+    "id": "/daily"
   }
 ]

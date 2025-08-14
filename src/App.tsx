@@ -14,7 +14,7 @@ function App() {
     const SIDEBAR_WIDTH = 300; // SideBar 너비 (px)
 
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={"/SIMPLE_BLOG"}>
             {/* 고정된 상단 Navigation */}
             <Box
                 position="fixed"
@@ -57,7 +57,7 @@ function App() {
                 >
                     <Routes>
                         <Route
-                            path="/SIMPLE_BLOG/"
+                            path="/category/:category/:subCategory?"
                             element={<RecentPostsPage category={selectedCategoryProps}/>}
                         />
                         <Route
