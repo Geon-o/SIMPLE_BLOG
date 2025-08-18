@@ -24,12 +24,12 @@ import type {CategoryHandlerProps} from "@/types/CategoryHandlerProps.tsx";
 import type {CategoryPropsStatus} from "@/types/CategoryPropsStatus.tsx";
 import {useNavigate} from "react-router-dom";
 
-const Navigation = ({setSelectedCategoryProps}: CategoryHandlerProps) => {
+const Navigation = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [openCategory, setOpenCategory] = useState<string | null>(null);
     const isMobile = useBreakpointValue({base: true, md: false});
     const [selectedCategory, setSelectedCategory] = useState<CategoryPropsStatus>({
-        category: "최근게시물",
+        category: "",
         subCategory: "",
     });
     const navigate = useNavigate();
@@ -59,10 +59,6 @@ const Navigation = ({setSelectedCategoryProps}: CategoryHandlerProps) => {
         handleDrawerClose();
     };
 
-    useEffect(() => {
-        setSelectedCategoryProps(selectedCategory);
-    }, [selectedCategory, setSelectedCategoryProps]);
-
     return (
         <>
             <Box
@@ -89,7 +85,7 @@ const Navigation = ({setSelectedCategoryProps}: CategoryHandlerProps) => {
                                 src={BlogLogo}
                                 alt="logo"
                                 cursor="pointer"
-                                onClick={() => (window.location.href = "/")}
+                                onClick={() => (window.location.href = "/SIMPLE_BLOG/category/recent")}
                             />
                             <IconButton
                                 aria-label="Open menu"
@@ -105,7 +101,7 @@ const Navigation = ({setSelectedCategoryProps}: CategoryHandlerProps) => {
                                 src={BlogLogo}
                                 alt="logo"
                                 cursor="pointer"
-                                onClick={() => (window.location.href = "/")}
+                                onClick={() => (window.location.href = "/SIMPLE_BLOG/category/recent")}
                             />
                             <InputGroup size="md" maxW="300px">
                                 <Input type="text" placeholder="검색..."/>

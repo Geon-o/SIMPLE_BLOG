@@ -1,10 +1,5 @@
 [
   {
-    "name": "최근게시물",
-    "subCategories": [],
-    "id": "/recent"
-  },
-  {
     "name": "React",
     "subCategories": [
       {"name": "useState", "id":  "/react/useState"},

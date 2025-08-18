@@ -1,10 +1,13 @@
-import {Box, HStack, Text, VStack} from "@chakra-ui/react";
+import {Box, Text} from "@chakra-ui/react";
 import ContentCard from "@components/content/ContentCard.tsx";
 import useNotionData from "@hooks/useNotionData.tsx";
-import type {CategoryPropsStatus} from "@/types/CategoryPropsStatus.tsx";
+import {useLocation} from "react-router-dom";
 
-const RecentPostsPage = () => {
+const ContentByCategoryPage = () => {
     const {data, loading, error} = useNotionData();
+    const location = useLocation();
+
+    console.log(location);
 
     if (error) {
         return <Text>Error loading content.</Text>;
@@ -19,4 +22,4 @@ const RecentPostsPage = () => {
     );
 };
 
-export default RecentPostsPage;
+export default ContentByCategoryPage;
