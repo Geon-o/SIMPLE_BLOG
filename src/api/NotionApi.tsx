@@ -21,6 +21,28 @@ export default function NotionApi() {
         }
     }
 
-    return {recentPostApi, fetchNotionPage};
+    const contentByCategoryApi = async (category: string) => {
+        const res = await axios.post('https://notion-proxy-api.vercel.app/api/contentByCategory', {
+            "databaseId": "253eca04b9ba803d8651cea9b8e4b09d",
+            "category": category
+        })
+        return res.data.results;
+    };
+
+    const categoryListApi = async () => {
+        const res = await axios.post('https://notion-proxy-api.vercel.app/api/categoryList', {
+            "databaseId": "253eca04b9ba803d8651cea9b8e4b09d"
+        })
+        return res.data.results;
+    };
+
+    const subCategoryListApi = async () => {
+        const res = await axios.post('https://notion-proxy-api.vercel.app/api/subCategoryList', {
+            "databaseId": "253eca04b9ba8097b08cde799bed10dc",
+        })
+        return res.data.results;
+    };
+
+    return {recentPostApi, fetchNotionPage, categoryListApi, subCategoryListApi};
 };
 

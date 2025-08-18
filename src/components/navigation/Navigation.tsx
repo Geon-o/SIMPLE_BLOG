@@ -19,10 +19,9 @@ import {
 import {CloseIcon, HamburgerIcon, SearchIcon} from "@chakra-ui/icons";
 import BlogLogo from "@assets/logo/blog_logo.png";
 import {useEffect, useState} from "react";
-import categories from "@assets/categories.json";
-import type {CategoryHandlerProps} from "@/types/CategoryHandlerProps.tsx";
 import type {CategoryPropsStatus} from "@/types/CategoryPropsStatus.tsx";
 import {useNavigate} from "react-router-dom";
+import useCategoryStore from "@store/categoryStore.ts";
 
 const Navigation = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -33,19 +32,20 @@ const Navigation = () => {
         subCategory: "",
     });
     const navigate = useNavigate();
+    const { categories, loading, error, fetchInitialData, revalidateCategories } = useCategoryStore();
 
     const handleDrawerOpen = () => setIsDrawerOpen(true);
     const handleDrawerClose = () => setIsDrawerOpen(false);
 
     const handleCategoryClick = (category: any) => {
-        setOpenCategory(prevOpenCategory => (prevOpenCategory === category.name ? null : category.name));
+        setOpenCategory(prevOpenCategory => (prevOpenCategory === category.title ? null : category.title));
         setSelectedCategory({
-            category: category.name,
+            category: category.title,
             subCategory: null,
         });
 
-        if (category.subCategories.length === 0) {
-            navigate(category.url);
+        if (category.subCategory.length === 0) {
+            navigate(category.path);
             handleDrawerClose();
         }
     };
@@ -53,9 +53,9 @@ const Navigation = () => {
     const handleSubCategoryClick = (subCategory: any) => {
         setSelectedCategory(prev => ({
             ...prev,
-            subCategory: subCategory.name
+            subCategory: subCategory.title
         }));
-        navigate(subCategory.url);
+        navigate(subCategory.path);
         handleDrawerClose();
     };
 
@@ -147,7 +147,7 @@ const Navigation = () => {
                             </InputGroup>
                             <VStack align="start" w="100%">
                                 {categories.map((category) => (
-                                    <Box key={category.name} w="100%">
+                                    <Box key={category.title} w="100%">
                                         <Box
                                             p={2}
                                             w="100%"
@@ -155,21 +155,21 @@ const Navigation = () => {
                                             cursor="pointer"
                                             onClick={() => handleCategoryClick(category)}
                                         >
-                                            {category.name}
+                                            {category.title}
                                         </Box>
-                                        <Collapse in={openCategory === category.name} animateOpacity>
+                                        <Collapse in={openCategory === category.title} animateOpacity>
                                             <VStack align="start" w="100%" pl={4} mt={2}>
-                                                {category.subCategories.map((subCategory) => (
+                                                {category.subCategory.map((subCategory) => (
                                                     <Box
-                                                        key={subCategory.name}
+                                                        key={subCategory.title}
                                                         p={2}
                                                         w="100%"
-                                                        bg={selectedCategory.subCategory === subCategory.name ? "gray.100" : "transparent"}
+                                                        bg={selectedCategory.subCategory === subCategory.title ? "gray.100" : "transparent"}
                                                         _hover={{bg: "gray.100"}}
                                                         cursor="pointer"
                                                         onClick={() => handleSubCategoryClick(subCategory)}
                                                     >
-                                                        {subCategory.name}
+                                                        {subCategory.title}
                                                     </Box>
                                                 ))}
                                             </VStack>

@@ -1,9 +1,8 @@
-import {Box, Card, Collapse, VStack} from "@chakra-ui/react";
-import categories from "../../assets/categories.json";
+import {Box, Card, Collapse, VStack, Skeleton, Text} from "@chakra-ui/react";
 import {useEffect, useState} from "react";
-import type {CategoryHandlerProps} from "@/types/CategoryHandlerProps.tsx";
 import type {CategoryPropsStatus} from "@/types/CategoryPropsStatus.tsx";
 import {useNavigate} from "react-router-dom";
+import useCategoryStore from "@/store/categoryStore.ts";
 
 const SideBar = () => {
     const [openCategory, setOpenCategory] = useState<string | null>(null);
@@ -13,35 +12,72 @@ const SideBar = () => {
     });
     const navigate = useNavigate();
 
+    const { categories, loading, error, fetchInitialData, revalidateCategories } = useCategoryStore();
+
+    useEffect(() => {
+        fetchInitialData();
+    }, [fetchInitialData]);
+
+    useEffect(() => {
+        const handleRevalidation = () => {
+            if (document.visibilityState === 'visible') {
+                revalidateCategories();
+            }
+        };
+
+        window.addEventListener('visibilitychange', handleRevalidation);
+        window.addEventListener('focus', handleRevalidation);
+
+        return () => {
+            window.removeEventListener('visibilitychange', handleRevalidation);
+            window.removeEventListener('focus', handleRevalidation);
+        };
+    }, [revalidateCategories]);
+
     const handleCategoryClick = (category: any) => {
-        if (openCategory === category.name) {
+        if (openCategory === category.title) {
             setOpenCategory(null);
         } else {
-            setOpenCategory(category.name);
+            setOpenCategory(category.title);
         }
         setSelectedCategory({
-            category: category.name,
+            category: category.title,
             subCategory: null,
         });
-        navigate(`/category${category.id}`);
+        navigate(`/category${category.path}`);
     };
 
     const handleSubCategoryClick = (subCategory: any) => {
         setSelectedCategory(prev => ({
             ...prev,
-            subCategory: subCategory.name
+            subCategory: subCategory.title
         }));
-        navigate(`/category${subCategory.id}`);
+        navigate(`/category${subCategory.path}`);
     };
 
     useEffect(() => {
-        const currentCategory = categories.find(c => c.name === selectedCategory.category);
+        const currentCategory = categories.find(c => c.title === selectedCategory.category);
         if (currentCategory && selectedCategory.subCategory) {
-            if (!currentCategory.subCategories.some(sc => sc.name === selectedCategory.subCategory)) {
+            if (!currentCategory.subCategory.some(sc => sc.title === selectedCategory.subCategory)) {
                 setSelectedCategory(prev => ({ ...prev, subCategory: "" }));
             }
         }
-    }, [selectedCategory]);
+    }, [selectedCategory, categories]);
+
+    if (loading && categories.length === 0) {
+        return (
+            <VStack p={2} spacing={4} align="stretch">
+                <Skeleton height="40px" />
+                <Skeleton height="40px" />
+                <Skeleton height="40px" />
+                <Skeleton height="40px" />
+            </VStack>
+        );
+    }
+
+    if (error) {
+        return <Text>카테고리 목록을 불러오던 중 에러가 발생했습니다. <br/> 새로고침을 해주세요.</Text>;
+    }
 
     return (
       <>
@@ -65,30 +101,30 @@ const SideBar = () => {
 
               </Box>
               {categories.map((category) => (
-                <Box key={category.name} w="100%">
+                <Box key={category.title} w="100%">
                     <Card
                       p={2}
                       borderBottom="1px solid #ddd"
                       style={{boxShadow: "none", cursor: "pointer"}}
-                      bg={selectedCategory.category === category.name && !selectedCategory.subCategory ? "gray.100" : "transparent"}
+                      bg={selectedCategory.category === category.title && !selectedCategory.subCategory ? "gray.100" : "transparent"}
                       _hover={{bg: "gray.100"}}
                       onClick={() => handleCategoryClick(category)}
                     >
-                        {category.name}
+                        {category.title}
                     </Card>
-                    <Collapse in={openCategory === category.name} animateOpacity>
+                    <Collapse in={openCategory === category.title} animateOpacity>
                         <VStack align="start" w="100%" pl={4} mt={2}>
-                            {category.subCategories.map((subCategory) => (
+                            {category.subCategory.map((subCategory) => (
                               <Box
-                                key={subCategory.name}
+                                key={subCategory.title}
                                 p={2}
                                 w="100%"
-                                bg={selectedCategory.subCategory === subCategory.name ? "gray.100" : "transparent"}
+                                bg={selectedCategory.subCategory === subCategory.title ? "gray.100" : "transparent"}
                                 _hover={{bg: "gray.100"}}
                                 cursor="pointer"
                                 onClick={() => handleSubCategoryClick(subCategory)}
                               >
-                                  {subCategory.name}
+                                  {subCategory.title}
                               </Box>
                             ))}
                         </VStack>
