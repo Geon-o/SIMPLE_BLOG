@@ -21,7 +21,7 @@ const RedirectOnRefresh = () => {
 function App() {
     const NAV_HEIGHT = 64; // Navigation 바 높이 (px)
     const SIDEBAR_WIDTH = 300; // SideBar 너비 (px)
-ㅋ
+
     return (
         <BrowserRouter basename={"/SIMPLE_BLOG"}>
             <RedirectOnRefresh />
