@@ -22,6 +22,7 @@ import {useEffect, useState} from "react";
 import type {CategoryPropsStatus} from "@/types/CategoryPropsStatus.tsx";
 import {useNavigate} from "react-router-dom";
 import useCategoryStore from "@store/categoryStore.ts";
+import type {Categories, SubCategory} from "@store/categoryStore.ts";
 
 const Navigation = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -37,7 +38,7 @@ const Navigation = () => {
     const handleDrawerOpen = () => setIsDrawerOpen(true);
     const handleDrawerClose = () => setIsDrawerOpen(false);
 
-    const handleCategoryClick = (category: any) => {
+    const handleCategoryClick = (category: Categories) => {
         setOpenCategory(prevOpenCategory => (prevOpenCategory === category.title ? null : category.title));
         setSelectedCategory({
             category: category.title,
@@ -50,7 +51,7 @@ const Navigation = () => {
         }
     };
 
-    const handleSubCategoryClick = (subCategory: any) => {
+    const handleSubCategoryClick = (subCategory: SubCategory) => {
         setSelectedCategory(prev => ({
             ...prev,
             subCategory: subCategory.title

@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import type {CategoryPropsStatus} from "@/types/CategoryPropsStatus.tsx";
 import {useNavigate} from "react-router-dom";
 import useCategoryStore from "@/store/categoryStore.ts";
+import type {Categories, SubCategory} from "@/store/categoryStore.ts";
 
 const SideBar = () => {
     const [openCategory, setOpenCategory] = useState<string | null>(null);
@@ -34,7 +35,7 @@ const SideBar = () => {
         };
     }, [revalidateCategories]);
 
-    const handleCategoryClick = (category: any) => {
+    const handleCategoryClick = (category: Categories) => {
         if (openCategory === category.title) {
             setOpenCategory(null);
         } else {
@@ -47,7 +48,7 @@ const SideBar = () => {
         navigate(`/category${category.path}`);
     };
 
-    const handleSubCategoryClick = (mainCategory: any, subCategory: any) => {
+    const handleSubCategoryClick = (mainCategory: Categories, subCategory: SubCategory) => {
         setSelectedCategory({
             category: mainCategory.title,
             subCategory: subCategory.title
