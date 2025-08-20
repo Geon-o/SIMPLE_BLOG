@@ -104,11 +104,12 @@ const useCategoryStore = create(
     {
       name: 'category-storage', // 저장소에 사용될 이름
       storage: createJSONStorage(() => sessionStorage), // sessionStorage 사용
-      // loading과 error 상태는 저장소에 저장하지 않도록 필터링
-      partialize: (state) =>
-        Object.fromEntries(
-          Object.entries(state).filter(([key]) => !['loading', 'error'].includes(key))
-        ),
+      partialize: (state) => {
+        const stateToPersist = { ...state };
+        delete stateToPersist.loading;
+        delete stateToPersist.error;
+        return stateToPersist;
+      },
     }
   )
 );
