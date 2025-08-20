@@ -1,37 +1,61 @@
-import React, {useEffect, useState} from 'react'
-import NotionApi from "@/api/NotionApi.tsx";
-import { NotionRenderer } from 'react-notion-x';
+import {useEffect, useState} from 'react';
+import {NotionRenderer} from 'react-notion-x';
+import {useLocation} from 'react-router-dom';
 import 'react-notion-x/src/styles.css';
-import {useLocation} from "react-router-dom";
-import {Code} from "react-notion-x/build/third-party/code";
 import 'prismjs/themes/prism-tomorrow.css';
+import 'katex/dist/katex.min.css';
+import {Code} from 'react-notion-x/build/third-party/code';
+import {Collection} from 'react-notion-x/build/third-party/collection';
+import {Equation} from 'react-notion-x/build/third-party/equation';
+import NotionApi from "@/api/NotionApi.tsx";
+import {Spinner, Box} from "@chakra-ui/react";
 
-export default function NotionPageView() {
-    const location = useLocation();
-    const pageId = location.state?.pageId;
+const NotionPageView = () => {
     const [recordMap, setRecordMap] = useState(null);
-    const { fetchNotionPage } = NotionApi();
+    const [loading, setLoading] = useState(true);
+    const location = useLocation();
+    const {fetchNotionPage} = NotionApi();
 
     useEffect(() => {
+        const pageId = location.state?.pageId;
         if (pageId) {
-            const getData = async () => {
-                const data = await fetchNotionPage(pageId);
-                setRecordMap(data);
-            };
-            getData();
+            setLoading(true);
+            fetchNotionPage(pageId)
+                .then((data) => {
+                    setRecordMap(data);
+                    setLoading(false);
+                })
+                .catch(() => setLoading(false));
         }
-    }, [pageId]);
+    }, [location.state?.pageId]);
 
-    if (!recordMap) return <div>Loading...</div>;
+    if (loading) {
+        return <Box display="flex" justifyContent="center" alignItems="center" height="100vh"><Spinner size="xl"/></Box>;
+    }
 
     return (
-        <NotionRenderer
-            recordMap={recordMap}
-            fullPage={false}
-            darkMode={false}
-            components={{
-                Code: Code,
-            }}
-        />
+        <>
+            <style>{`
+              .notion-collection-page-properties {
+                display: none !important;
+              }
+            `}</style>
+            <div style={{maxWidth: 768, margin: '0 auto'}}>
+                {recordMap && (
+                    <NotionRenderer
+                        recordMap={recordMap}
+                        fullPage={false}
+                        darkMode={false}
+                        components={{
+                            Code,
+                            Collection,
+                            Equation,
+                        }}
+                    />
+                )}
+            </div>
+        </>
     );
-}
+};
+
+export default NotionPageView;

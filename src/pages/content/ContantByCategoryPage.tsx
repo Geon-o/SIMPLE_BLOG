@@ -1,30 +1,39 @@
 import {Box, Text} from "@chakra-ui/react";
 import ContentCard from "@components/content/ContentCard.tsx";
-import useNotionData from "@hooks/useNotionData.tsx";
-import {useLocation} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import NotionApi from "@/api/NotionApi.tsx";
 
 const ContentByCategoryPage = () => {
-    // const {data, loading, error} = useNotionData();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
-    const {recentPostApi} = NotionApi();
+    const {contentByCategoryApi} = NotionApi();
+    const {mainCategory, subCategory} = useParams<{ mainCategory: string; subCategory?: string }>();
 
-    const location = useLocation();
+    const categoryToFetch = subCategory || mainCategory;
 
     useEffect(() => {
-        recentPostApi()
-            .then(setData)
-            .catch(setError)
-            .finally(() => {
+        const fetchContent = async () => {
+            if (!categoryToFetch) return;
+
+            setLoading(true);
+            setError(null);
+            try {
+                const results = await contentByCategoryApi(categoryToFetch);
+                setData(results);
+            } catch (err) {
+                setError(err as Error);
+            } finally {
                 setLoading(false);
-            });
-    }, [location]);
+            }
+        };
+
+        fetchContent();
+    }, [categoryToFetch]);
 
     if (error) {
-        return <Text>Error loading content.</Text>;
+        return <Text>Error loading content: {error.message}</Text>;
     }
 
     return (

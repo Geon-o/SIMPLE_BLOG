@@ -85,7 +85,7 @@ const Navigation = () => {
                                 src={BlogLogo}
                                 alt="logo"
                                 cursor="pointer"
-                                onClick={() => (window.location.href = "/SIMPLE_BLOG/category/recent")}
+                                onClick={() => (window.location.href = "/SIMPLE_BLOG/")}
                             />
                             <IconButton
                                 aria-label="Open menu"
@@ -101,7 +101,7 @@ const Navigation = () => {
                                 src={BlogLogo}
                                 alt="logo"
                                 cursor="pointer"
-                                onClick={() => (window.location.href = "/SIMPLE_BLOG/category/recent")}
+                                onClick={() => (window.location.href = "/SIMPLE_BLOG/")}
                             />
                             <InputGroup size="md" maxW="300px">
                                 <Input type="text" placeholder="검색..."/>

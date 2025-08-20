@@ -71,7 +71,7 @@ function App() {
                             element={<RecentPostsPage/>}
                         />
                         <Route
-                            path="/category/:category/:subCategory?"
+                            path="/category/:mainCategory/:subCategory?"
                             element={<ContentByCategoryPage />}
                         />
                         <Route

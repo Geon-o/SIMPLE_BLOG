@@ -47,11 +47,11 @@ const SideBar = () => {
         navigate(`/category${category.path}`);
     };
 
-    const handleSubCategoryClick = (subCategory: any) => {
-        setSelectedCategory(prev => ({
-            ...prev,
+    const handleSubCategoryClick = (mainCategory: any, subCategory: any) => {
+        setSelectedCategory({
+            category: mainCategory.title,
             subCategory: subCategory.title
-        }));
+        });
         navigate(`/category${subCategory.path}`);
     };
 
@@ -119,10 +119,10 @@ const SideBar = () => {
                                 key={subCategory.title}
                                 p={2}
                                 w="100%"
-                                bg={selectedCategory.subCategory === subCategory.title ? "gray.100" : "transparent"}
+                                bg={selectedCategory.category === category.title && selectedCategory.subCategory === subCategory.title ? "gray.100" : "transparent"}
                                 _hover={{bg: "gray.100"}}
                                 cursor="pointer"
-                                onClick={() => handleSubCategoryClick(subCategory)}
+                                onClick={() => handleSubCategoryClick(category, subCategory)}
                               >
                                   {subCategory.title}
                               </Box>
