@@ -44,11 +44,8 @@ const Navigation = () => {
             category: category.title,
             subCategory: null,
         });
-
-        if (category.subCategory.length === 0) {
-            navigate(category.path);
-            handleDrawerClose();
-        }
+        navigate(`/category${category.path}`);
+        handleDrawerClose();
     };
 
     const handleSubCategoryClick = (subCategory: SubCategory) => {
@@ -56,7 +53,7 @@ const Navigation = () => {
             ...prev,
             subCategory: subCategory.title
         }));
-        navigate(subCategory.path);
+        navigate(`/category${subCategory.path}`);
         handleDrawerClose();
     };
 
