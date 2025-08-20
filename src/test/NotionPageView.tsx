@@ -39,12 +39,15 @@ const NotionPageView = () => {
               .notion-collection-page-properties {
                 display: none !important;
               }
+              .notion-header {
+                display: none !important;
+              }
             `}</style>
             <div style={{maxWidth: 768, margin: '0 auto'}}>
                 {recordMap && (
                     <NotionRenderer
                         recordMap={recordMap}
-                        fullPage={false}
+                        fullPage={true}
                         darkMode={false}
                         components={{
                             Code,
