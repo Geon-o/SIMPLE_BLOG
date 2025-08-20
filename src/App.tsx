@@ -1,19 +1,30 @@
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Route, Routes, useNavigate} from "react-router-dom";
 import Navigation from "@components/navigation/Navigation.tsx";
 import {Box, Container} from "@chakra-ui/react";
 import SideBar from "@pages/side_bar/SideBar.tsx";
-import { useState } from "react";
 import RecentPostsPage from "@pages/content/RecentPostsPage.tsx";
-import type {CategoryPropsStatus} from "@/types/CategoryPropsStatus.tsx";
+import NotionPageView from "@/test/NotionPageView.tsx";
+import ContentByCategoryPage from "@pages/content/ContantByCategoryPage.tsx";
+import {useEffect} from "react";
+
+const RedirectOnRefresh = () => {
+    useEffect(() => {
+        const navigationEntries = performance.getEntriesByType("navigation");
+        if (navigationEntries.length > 0 && navigationEntries[0].type === 'reload') {
+            window.location.href = "/SIMPLE_BLOG/";
+        }
+    }, []);
+    return null;
+};
+
 
 function App() {
-    const [selectedCategoryProps, setSelectedCategoryProps] = useState<CategoryPropsStatus>({ category: "최근게시물", subCategory: "" });
-
     const NAV_HEIGHT = 64; // Navigation 바 높이 (px)
     const SIDEBAR_WIDTH = 300; // SideBar 너비 (px)
 
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={"/SIMPLE_BLOG"}>
+            <RedirectOnRefresh />
             {/* 고정된 상단 Navigation */}
             <Box
                 position="fixed"
@@ -25,7 +36,7 @@ function App() {
                 bg="white"
                 boxShadow="sm"
             >
-                <Navigation setSelectedCategoryProps={setSelectedCategoryProps}/>
+                <Navigation/>
             </Box>
 
             <Container maxW="1493px" display="flex" pt={`${NAV_HEIGHT}px`}>
@@ -40,9 +51,9 @@ function App() {
                     borderRight="1px solid #e2e8f0"
                     p={4}
                     flexShrink={0}
-                    display={{ base: "none", md: "block" }}
+                    display={{base: "none", md: "block"}}
                 >
-                    <SideBar setSelectedCategoryProps={setSelectedCategoryProps} />
+                    <SideBar/>
                 </Box>
 
                 {/* 실제 컨텐츠 영역 */}
@@ -52,12 +63,20 @@ function App() {
                     minH="100%"
                     bg="white"
                     p={4}
-                    borderRight={{ base: "none", md: "1px solid #ddd" }}
+                    borderRight={{base: "none", md: "1px solid #ddd"}}
                 >
                     <Routes>
                         <Route
-                            path="/SIMPLE_BLOG/"
-                            element={<RecentPostsPage category={selectedCategoryProps}/>}
+                            path="/"
+                            element={<RecentPostsPage/>}
+                        />
+                        <Route
+                            path="/category/:mainCategory/:subCategory?"
+                            element={<ContentByCategoryPage />}
+                        />
+                        <Route
+                            path="/post"
+                            element={<NotionPageView/>}
                         />
                     </Routes>
                 </Box>

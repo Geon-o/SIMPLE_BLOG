@@ -5,10 +5,10 @@ export default function useNotionData() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
-    const {contentApi} = NotionApi();
+    const {recentPostApi} = NotionApi();
 
     useEffect(() => {
-        contentApi()
+        recentPostApi()
           .then(setData)
           .catch(setError)
           .finally(() => {
