@@ -9,15 +9,15 @@ interface Category {
   path: string;
 }
 
-interface SubCategory {
+export interface SubCategory {
     title: string;
     FK: string;
     path: string;
 }
 
-interface Categories {
-  title: String;
-  path: String;
+export interface Categories {
+  title: string;
+  path: string;
   subCategory: SubCategory[]
 }
 
