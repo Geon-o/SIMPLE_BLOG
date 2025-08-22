@@ -2,9 +2,7 @@ import axios from "axios";
 
 export default function NotionApi() {
     const recentPostApi = async () => {
-        const res = await axios.post('https://notion-proxy-api.vercel.app/api/recentPostList', {
-            "databaseId": "21eeca04b9ba80a78b1ef6ac83dc931a"
-        })
+        const res = await axios.post('https://notion-proxy-api.vercel.app/api/recentPostList')
 
         return res.data.results;
     };
@@ -23,23 +21,18 @@ export default function NotionApi() {
 
     const contentByCategoryApi = async (category: string) => {
         const res = await axios.post('https://notion-proxy-api.vercel.app/api/postListForCategory', {
-            "databaseId": "21eeca04b9ba80a78b1ef6ac83dc931a",
             "category": category
         })
         return res.data.results;
     };
 
     const categoryListApi = async () => {
-        const res = await axios.post('https://notion-proxy-api.vercel.app/api/categoryList', {
-            "databaseId": "253eca04b9ba803d8651cea9b8e4b09d"
-        })
+        const res = await axios.post('https://notion-proxy-api.vercel.app/api/categoryList')
         return res.data.results;
     };
 
     const subCategoryListApi = async () => {
-        const res = await axios.post('https://notion-proxy-api.vercel.app/api/subCategoryList', {
-            "databaseId": "253eca04b9ba8097b08cde799bed10dc",
-        })
+        const res = await axios.post('https://notion-proxy-api.vercel.app/api/subCategoryList')
         return res.data.results;
     };
 
