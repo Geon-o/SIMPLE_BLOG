@@ -1,11 +1,10 @@
-import {BrowserRouter, Route, Routes, useNavigate} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Navigation from "@components/navigation/Navigation.tsx";
 import {Box, Container} from "@chakra-ui/react";
-import SideBar from "@pages/side_bar/SideBar.tsx";
-import RecentPostsPage from "@pages/content/RecentPostsPage.tsx";
-import DetailContentViewPage from "@pages/content/DetailContentViewPage.tsx";
-import ContentByCategoryPage from "@pages/content/ContantByCategoryPage.tsx";
-import {useEffect} from "react";
+import {RecentPostsPage} from "@pages/content/RecentPostsPage.tsx";
+import {DetailContentViewPage} from "@pages/content/DetailContentViewPage.tsx";
+import {useEffect, useState} from "react";
+import {TagCloudSidebar} from "@/pages/side_bar/TagCloudSideBar.tsx";
 
 const RedirectOnRefresh = () => {
     useEffect(() => {
@@ -20,7 +19,12 @@ const RedirectOnRefresh = () => {
 
 function App() {
     const NAV_HEIGHT = 64; // Navigation 바 높이 (px)
-    const SIDEBAR_WIDTH = 300; // SideBar 너비 (px)
+    const SIDEBAR_WIDTH = 240; // SideBar 너비 (px)
+    const [selectedTag, setSelectedTag] = useState<string | null>(null);
+
+    const handleTagClick = (tag: string) => {
+        setSelectedTag(tag === selectedTag ? null : tag);
+    };
 
     return (
         <BrowserRouter basename={"/SIMPLE_BLOG"}>
@@ -36,43 +40,38 @@ function App() {
                 bg="white"
                 boxShadow="sm"
             >
-                <Navigation/>
+                <Navigation onTagClick={handleTagClick} selectedTag={selectedTag} />
             </Box>
 
-            <Container maxW="1493px" display="flex" pt={`${NAV_HEIGHT}px`}>
+            <Box position="relative" pt={`${NAV_HEIGHT}px`}>
                 {/* 고정된 왼쪽 SideBar */}
                 <Box
                     as="aside"
-                    position="sticky"
+                    position="absolute"
+                    left={0}
                     top={`${NAV_HEIGHT}px`}
                     height={`calc(100vh - ${NAV_HEIGHT}px)`}
                     width={`${SIDEBAR_WIDTH}px`}
                     overflowY="auto"
                     borderRight="1px solid #e2e8f0"
                     p={4}
-                    flexShrink={0}
                     display={{base: "none", md: "block"}}
                 >
-                    <SideBar/>
+                    <TagCloudSidebar onTagClick={handleTagClick} selectedTag={selectedTag} />
                 </Box>
 
                 {/* 실제 컨텐츠 영역 */}
                 <Box
                     as="main"
-                    flex="1"
+                    width="100%"
                     minH="100%"
                     bg="white"
                     p={4}
-                    borderRight={{base: "none", md: "1px solid #ddd"}}
                 >
                     <Routes>
                         <Route
                             path="/"
-                            element={<RecentPostsPage/>}
-                        />
-                        <Route
-                            path="/category/:mainCategory/:subCategory?"
-                            element={<ContentByCategoryPage />}
+                            element={<RecentPostsPage selectedTag={selectedTag} />}
                         />
                         <Route
                             path="/post"
@@ -80,7 +79,7 @@ function App() {
                         />
                     </Routes>
                 </Box>
-            </Container>
+            </Box>
         </BrowserRouter>
     );
 }
