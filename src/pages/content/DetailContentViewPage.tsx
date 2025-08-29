@@ -10,7 +10,7 @@ import {Equation} from 'react-notion-x/build/third-party/equation';
 import NotionApi from "@/api/NotionApi.tsx";
 import {Spinner, Box} from "@chakra-ui/react";
 
-const DetailContentViewPage = () => {
+export const DetailContentViewPage = () => {
     const [recordMap, setRecordMap] = useState(null);
     const [loading, setLoading] = useState(true);
     const location = useLocation();
@@ -61,4 +61,4 @@ const DetailContentViewPage = () => {
     );
 };
 
-export default DetailContentViewPage;
+

@@ -19,23 +19,6 @@ export default function NotionApi() {
         }
     }
 
-    const contentByCategoryApi = async (category: string) => {
-        const res = await axios.post('https://notion-proxy-api.vercel.app/api/postListForCategory', {
-            "category": category
-        })
-        return res.data.results;
-    };
-
-    const categoryListApi = async () => {
-        const res = await axios.post('https://notion-proxy-api.vercel.app/api/categoryList')
-        return res.data.results;
-    };
-
-    const subCategoryListApi = async () => {
-        const res = await axios.post('https://notion-proxy-api.vercel.app/api/subCategoryList')
-        return res.data.results;
-    };
-
-    return {recentPostApi, contentByCategoryApi, fetchNotionPage, categoryListApi, subCategoryListApi};
+    return {recentPostApi, fetchNotionPage};
 };
 

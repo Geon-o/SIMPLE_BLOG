@@ -1,6 +1,5 @@
 import {
     Box,
-    Collapse,
     Container,
     Drawer,
     DrawerBody,
@@ -18,44 +17,22 @@ import {
 } from "@chakra-ui/react";
 import {CloseIcon, HamburgerIcon, SearchIcon} from "@chakra-ui/icons";
 import BlogLogo from "@assets/logo/blog_logo.png";
-import {useEffect, useState} from "react";
-import type {CategoryPropsStatus} from "@/types/CategoryPropsStatus.tsx";
+import {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import useCategoryStore from "@store/categoryStore.ts";
-import type {Categories, SubCategory} from "@store/categoryStore.ts";
+import {TagCloudSidebar} from "@/pages/side_bar/TagCloudSideBar.tsx";
 
-const Navigation = () => {
+interface NavigationProps {
+    onTagClick: (tag: string | null) => void;
+    selectedTag: string | null;
+}
+
+const Navigation = ({ onTagClick, selectedTag }: NavigationProps) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const [openCategory, setOpenCategory] = useState<string | null>(null);
     const isMobile = useBreakpointValue({base: true, md: false});
-    const [selectedCategory, setSelectedCategory] = useState<CategoryPropsStatus>({
-        category: "",
-        subCategory: "",
-    });
     const navigate = useNavigate();
-    const { categories, loading, error, fetchInitialData, revalidateCategories } = useCategoryStore();
 
     const handleDrawerOpen = () => setIsDrawerOpen(true);
     const handleDrawerClose = () => setIsDrawerOpen(false);
-
-    const handleCategoryClick = (category: Categories) => {
-        setOpenCategory(prevOpenCategory => (prevOpenCategory === category.title ? null : category.title));
-        setSelectedCategory({
-            category: category.title,
-            subCategory: null,
-        });
-        navigate(`/category${category.path}`);
-        handleDrawerClose();
-    };
-
-    const handleSubCategoryClick = (subCategory: SubCategory) => {
-        setSelectedCategory(prev => ({
-            ...prev,
-            subCategory: subCategory.title
-        }));
-        navigate(`/category${subCategory.path}`);
-        handleDrawerClose();
-    };
 
     return (
         <>
@@ -143,38 +120,7 @@ const Navigation = () => {
                                     />
                                 </InputRightElement>
                             </InputGroup>
-                            <VStack align="start" w="100%">
-                                {categories.map((category) => (
-                                    <Box key={category.title} w="100%">
-                                        <Box
-                                            p={2}
-                                            w="100%"
-                                            _hover={{bg: "gray.100"}}
-                                            cursor="pointer"
-                                            onClick={() => handleCategoryClick(category)}
-                                        >
-                                            {category.title}
-                                        </Box>
-                                        <Collapse in={openCategory === category.title} animateOpacity>
-                                            <VStack align="start" w="100%" pl={4} mt={2}>
-                                                {category.subCategory.map((subCategory) => (
-                                                    <Box
-                                                        key={subCategory.title}
-                                                        p={2}
-                                                        w="100%"
-                                                        bg={selectedCategory.subCategory === subCategory.title ? "gray.100" : "transparent"}
-                                                        _hover={{bg: "gray.100"}}
-                                                        cursor="pointer"
-                                                        onClick={() => handleSubCategoryClick(subCategory)}
-                                                    >
-                                                        {subCategory.title}
-                                                    </Box>
-                                                ))}
-                                            </VStack>
-                                        </Collapse>
-                                    </Box>
-                                ))}
-                            </VStack>
+                            <TagCloudSidebar onTagClick={(tag) => { onTagClick(tag); handleDrawerClose(); }} selectedTag={selectedTag} />
                         </VStack>
                     </DrawerBody>
                 </DrawerContent>
