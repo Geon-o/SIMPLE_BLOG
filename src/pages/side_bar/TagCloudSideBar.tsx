@@ -1,8 +1,25 @@
 import { Box, Tag, Wrap, WrapItem, Text } from '@chakra-ui/react';
 import useNotionData from '@hooks/useNotionData.tsx';
 
+interface NotionTag {
+    id: string;
+    name: string;
+    color: string;
+}
+
+interface NotionProperties {
+    tag: {
+        multi_select: NotionTag[];
+    };
+}
+
+interface NotionPost {
+    id: string;
+    properties: NotionProperties;
+}
+
 interface TagCloudSidebarProps {
-    onTagClick: (tag: string) => void;
+    onTagClick: (tag: string | null) => void;
     selectedTag: string | null;
 }
 
@@ -17,8 +34,8 @@ export const TagCloudSidebar = ({ onTagClick, selectedTag }: TagCloudSidebarProp
         return <Text>Error loading tags.</Text>;
     }
 
-    const allTags = data.reduce((acc: string[], item: any) => {
-        const tags = item.properties.tag.multi_select.map((tag: any) => tag.name);
+    const allTags = (data as NotionPost[]).reduce((acc: string[], item: NotionPost) => {
+        const tags = item.properties.tag.multi_select.map((tag: NotionTag) => tag.name);
         return [...acc, ...tags];
     }, []);
 
@@ -37,7 +54,7 @@ export const TagCloudSidebar = ({ onTagClick, selectedTag }: TagCloudSidebarProp
                         최근게시글
                     </Tag>
                 </WrapItem>
-                {uniqueTags.map((tag) => (
+                {uniqueTags.map((tag: string) => (
                     <WrapItem key={tag}>
                         <Tag 
                             cursor="pointer"
