@@ -43,11 +43,11 @@ export const DetailContentViewPage = () => {
                 display: none !important;
               }
             `}</style>
-            <div style={{maxWidth: 768, margin: '0 auto'}}>
+            <div style={{maxWidth: 768, margin: '0 auto ', marginTop: '100px'}}>
                 {recordMap && (
                     <NotionRenderer
                         recordMap={recordMap}
-                        fullPage={true}
+                        fullPage={false}
                         darkMode={false}
                         components={{
                             Code,
