@@ -6,15 +6,7 @@ import {DetailContentViewPage} from "@pages/content/DetailContentViewPage.tsx";
 import {useEffect, useState} from "react";
 import {TagCloudSidebar} from "@/pages/side_bar/TagCloudSideBar.tsx";
 
-const RedirectOnRefresh = () => {
-    useEffect(() => {
-        const navigationEntries = performance.getEntriesByType("navigation");
-        if (navigationEntries.length > 0 && (navigationEntries[0] as PerformanceNavigationTiming).type === 'reload') {
-            window.location.href = "/SIMPLE_BLOG/";
-        }
-    }, []);
-    return null;
-};
+
 
 const Layout = () => {
     const NAV_HEIGHT = 64; // Navigation 바 높이 (px)
@@ -29,7 +21,6 @@ const Layout = () => {
 
     return (
         <>
-            <RedirectOnRefresh />
             {/* 고정된 상단 Navigation */}
             <Box
                 position="fixed"
@@ -89,7 +80,7 @@ const Layout = () => {
 
 function App() {
     return (
-        <BrowserRouter basename={"/SIMPLE_BLOG"}>
+        <BrowserRouter basename={"/SIMPLE_BLOG/"}>
             <Layout />
         </BrowserRouter>
     );
