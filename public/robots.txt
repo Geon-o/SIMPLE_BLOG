@@ -1,0 +1,6 @@
+# 모든 검색엔진 크롤러 허용
+User-agent: *
+Allow: /
+
+# sitemap 위치
+Sitemap: https://geon-o.github.io/SIMPLE_BLOG/sitemap.xml
