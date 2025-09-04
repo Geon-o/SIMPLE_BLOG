@@ -1,6 +1,6 @@
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Route, Routes, useNavigate} from "react-router-dom";
 import Navigation from "@components/navigation/Navigation.tsx";
-import {Box, Container} from "@chakra-ui/react";
+import {Box} from "@chakra-ui/react";
 import {RecentPostsPage} from "@pages/content/RecentPostsPage.tsx";
 import {DetailContentViewPage} from "@pages/content/DetailContentViewPage.tsx";
 import {useEffect, useState} from "react";
@@ -16,18 +16,19 @@ const RedirectOnRefresh = () => {
     return null;
 };
 
-
-function App() {
+const Layout = () => {
     const NAV_HEIGHT = 64; // Navigation 바 높이 (px)
     const SIDEBAR_WIDTH = 240; // SideBar 너비 (px)
     const [selectedTag, setSelectedTag] = useState<string | null>(null);
+    const navigate = useNavigate();
 
     const handleTagClick = (tag: string) => {
         setSelectedTag(tag === selectedTag ? null : tag);
+        navigate('/');
     };
 
     return (
-        <BrowserRouter basename={"/SIMPLE_BLOG"}>
+        <>
             <RedirectOnRefresh />
             {/* 고정된 상단 Navigation */}
             <Box
@@ -63,7 +64,8 @@ function App() {
                 {/* 실제 컨텐츠 영역 */}
                 <Box
                     as="main"
-                    width="100%"
+                    ml={{ base: 0, md: `${SIDEBAR_WIDTH}px` }}
+                    width={{ base: "100%", md: `calc(100% - ${SIDEBAR_WIDTH}px)` }}
                     minH="100%"
                     bg="white"
                     p={4}
@@ -80,8 +82,17 @@ function App() {
                     </Routes>
                 </Box>
             </Box>
+        </>
+    );
+}
+
+
+function App() {
+    return (
+        <BrowserRouter basename={"/SIMPLE_BLOG"}>
+            <Layout />
         </BrowserRouter>
     );
 }
 
-export default App
+export default App;
