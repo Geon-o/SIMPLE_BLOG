@@ -38,9 +38,10 @@ export const ContentCard = ({data, loading}: { data: any[], loading: boolean }) 
                     const createdDate = formatDate(item?.created_time);
                     const lastEditedDate = formatDate(item?.last_edited_time);
                     const displayDate = createdDate === lastEditedDate ? `${createdDate}` : `${lastEditedDate}`;
+                    const imageUrl = item?.properties.imageUrl.files[0]?.file.url || 'https://picsum.photos/400/300?random=1';
 
                     return (
-                        <Box 
+                        <Box
                             key={item?.properties?.ID.unique_id.number}
                             w="100%"
                             p={4}
@@ -53,8 +54,8 @@ export const ContentCard = ({data, loading}: { data: any[], loading: boolean }) 
                                 <Image
                                     objectFit='cover'
                                     boxSize="150px"
-                                    src={item?.properties.imageUrl.rich_text[0].plain_text}
-                                    alt={item?.properties.content.title[0].plain_text}
+                                    src={imageUrl}
+                                    alt={imageUrl}
                                     borderRadius="md"
                                 />
                                 <VStack align="start" spacing={2}>
